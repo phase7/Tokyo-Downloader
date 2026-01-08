@@ -19,41 +19,89 @@ Tokyo Downloader is a Python-based tool that fetches download links for anime Ep
 
 ## 📥 Installation
 
-You can either download the standalone executable (no installation required) or use the open-source Python version.
+### Prerequisites
 
-### Option 1: Download the Executable for Windows (No Installation Needed)
+This project uses [uv](https://docs.astral.sh/uv/) for fast, reliable dependency management. Install it first:
 
-- Download the `.exe` version from [here](https://github.com/MaJoRX0/Tokyo-Downloader/releases).
+```sh
+# macOS/Linux
+curl -LsSf https://astral.sh/uv/install.sh | sh
+
+# Or with Homebrew
+brew install uv
+
+# Windows
+powershell -ExecutionPolicy BypassUser -c "irm https://astral.sh/uv/install.ps1 | iex"
+```
+
+### Option 1: Run with uv (Recommended)
+
+Clone and run directly:
+
+```sh
+git clone https://github.com/phase7/Tokyo-Downloader.git
+cd Tokyo-Downloader
+uv run tokyo-downloader
+```
+
+### Option 2: One-time execution with uvx (from Git)
+
+Run directly from GitHub without cloning or installing:
+
+```sh
+# Run latest version from main branch
+uvx --from git+https://github.com/phase7/Tokyo-Downloader tokyo-downloader
+
+# Run from specific branch
+uvx --from git+https://github.com/phase7/Tokyo-Downloader@main tokyo-downloader
+
+# Run specific version/tag
+uvx --from git+https://github.com/phase7/Tokyo-Downloader@v1.0.0 tokyo-downloader
+
+# Run specific commit
+uvx --from git+https://github.com/phase7/Tokyo-Downloader@b10b346 tokyo-downloader
+```
+
+**Or from PyPI (after publishing):**
+
+```sh
+uvx tokyo-downloader
+```
+
+### Option 3: Traditional development setup
+
+```sh
+git clone https://github.com/phase7/Tokyo-Downloader.git
+cd Tokyo-Downloader
+uv venv
+source .venv/bin/activate  # Linux/Mac
+# .venv\Scripts\activate   # Windows
+uv sync
+tokyo-downloader
+```
+
+### Option 4: Download the Executable for Windows (No Installation Needed)
+
+- Download the `.exe` version from [here](https://github.com/phase7/Tokyo-Downloader/releases).
 - Run the executable file.
 - Follow the on-screen prompts.
 
-### Option 2: Use the Python Version (Supports Windows and Linux)
-
-Ensure **Python 3.8+** is installed, then create and activate a virtual environment:
-
-```sh
-python -m venv .venv
-source .venv/bin/activate
-```
-
-Install dependencies:
-
-```sh
-pip install -r requirements.txt
-```
+## 🔧 Usage
 
 Run the script with:
 
 ```sh
-python main.py
-```
+# Interactive mode (prompts for URL)
+tokyo-downloader
 
-## 🔧 Usage
+# Or with URL argument
+tokyo-downloader --url "https://www.tokyoinsider.com/anime/B/Bleach_(TV)"
+```
 
 ### Steps:
 
 1. Enter the anime URL (e.g., *Solo Leveling* page on Tokyo Insider).
-2. Select the range of episodes/OVAs/movies/speiclas (0 For none) to download. It is required to input a range (ie. `1-1`) if not `0`.
+2. Select the range of episodes/OVAs/movies/specials (0 For none) to download. It is required to input a range (ie. `1-1`) if not `0`.
 3. Choose sorting criteria (**Biggest Size**, **Most Downloaded**, **Latest**).
 4. The script fetches and saves links in `links.txt`.
 
@@ -111,7 +159,14 @@ It is suggested to move the `links.txt` into the folder you want the videos to b
 
 This script is for **educational purposes only**. Use responsibly and follow copyright laws.
 
+## 📚 Documentation
+
+For developers:
+- **[Local Development Setup](./docs/local-development.md)** - Set up your development environment
+- **[Running Tests](./docs/running-tests.md)** - Complete testing guide
+- **[Documentation Index](./docs/README.md)** - Full documentation overview
+
 ## 🤝 Contributions
 
-Feel free to report issues or suggest improvements!
+Feel free to report issues or suggest improvements! See our [developer documentation](./docs/) for setup instructions.
 

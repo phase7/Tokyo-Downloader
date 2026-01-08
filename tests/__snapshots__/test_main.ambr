@@ -1,0 +1,186 @@
+# serializer version: 1
+# name: test_convert_date_snapshot
+  dict({
+    '': 'datetime.min',
+    '01/01/20': '2020-01-01T00:00:00',
+    '06/15/22': '2022-06-15T00:00:00',
+    '12/31/23': '2023-12-31T00:00:00',
+    '99/99/99': 'datetime.min',
+    'invalid': 'datetime.min',
+  })
+# ---
+# name: test_convert_size_edge_cases_snapshot
+  dict({
+    '   100 MB   ': 100.0,
+    '0 GB': 0.0,
+    '0 MB': 0.0,
+    '0.5 MB': 0.5,
+    '1,234.56 MB': 1234.56,
+    '100 Mb': 100.0,
+    '100 mb': 100.0,
+    '1000000 MB': 1000000.0,
+    '100MB': 100.0,
+  })
+# ---
+# name: test_convert_size_snapshot
+  dict({
+    '': 0,
+    '1.5 GB': 1536.0,
+    '100 MB': 100.0,
+    '2,500 MB': 2500.0,
+    '3.14 GB': 3215.36,
+    'invalid': 0,
+  })
+# ---
+# name: test_date_comparison_snapshot
+  list([
+    dict({
+      'original': '01/01/20',
+      'parsed': '2020-01-01T00:00:00',
+    }),
+    dict({
+      'original': '03/10/21',
+      'parsed': '2021-03-10T00:00:00',
+    }),
+    dict({
+      'original': '06/15/22',
+      'parsed': '2022-06-15T00:00:00',
+    }),
+    dict({
+      'original': '12/25/23',
+      'parsed': '2023-12-25T00:00:00',
+    }),
+    dict({
+      'original': '12/31/23',
+      'parsed': '2023-12-31T00:00:00',
+    }),
+  ])
+# ---
+# name: test_file_output_mixed_formats_snapshot
+  '''
+  http://example.com/ep001.mkv
+  http://example.com/ep002.mkv|Episode 02.mkv
+  http://example.com/ep003.mkv
+  http://example.com/ep004.mkv|Episode 04 [HD].mkv
+  http://example.com/special01.mkv|Special Episode.mkv
+  
+  '''
+# ---
+# name: test_save_links_snapshot
+  '''
+  http://example.com/episode1.mkv
+  http://example.com/episode2.mkv|Custom Name 02.mkv
+  http://example.com/ova.mkv|OVA Special.mkv
+  http://example.com/movie.mkv
+  
+  '''
+# ---
+# name: test_size_comparison_snapshot
+  list([
+    dict({
+      'converted_mb': 100.0,
+      'original': '100 MB',
+    }),
+    dict({
+      'converted_mb': 350.5,
+      'original': '350.50 MB',
+    }),
+    dict({
+      'converted_mb': 450.75,
+      'original': '450.75 MB',
+    }),
+    dict({
+      'converted_mb': 1536.0,
+      'original': '1.5 GB',
+    }),
+    dict({
+      'converted_mb': 2048.0,
+      'original': '2 GB',
+    }),
+  ])
+# ---
+# name: test_sort_key_edge_cases_snapshot
+  list([
+    dict({
+      'input': '0',
+      'output': 0,
+    }),
+    dict({
+      'input': '00001',
+      'output': 1,
+    }),
+    dict({
+      'input': '-1',
+      'output': -1,
+    }),
+    dict({
+      'input': '1.5',
+      'output': 'inf',
+    }),
+    dict({
+      'input': '',
+      'output': 'inf',
+    }),
+  ])
+# ---
+# name: test_sort_key_snapshot
+  list([
+    dict({
+      'input': '1',
+      'output': 1,
+    }),
+    dict({
+      'input': '5',
+      'output': 5,
+    }),
+    dict({
+      'input': '10',
+      'output': 10,
+    }),
+    dict({
+      'input': '100',
+      'output': 100,
+    }),
+    dict({
+      'input': 'special',
+      'output': 'inf',
+    }),
+    dict({
+      'input': 'ova',
+      'output': 'inf',
+    }),
+    dict({
+      'input': 'abc',
+      'output': 'inf',
+    }),
+  ])
+# ---
+# name: test_sorting_workflow_snapshot
+  list([
+    dict({
+      'episode': '1',
+      'sort_key': 1,
+      'url': 'url2',
+    }),
+    dict({
+      'episode': '2',
+      'sort_key': 2,
+      'url': 'url5',
+    }),
+    dict({
+      'episode': '5',
+      'sort_key': 5,
+      'url': 'url1',
+    }),
+    dict({
+      'episode': '10',
+      'sort_key': 10,
+      'url': 'url3',
+    }),
+    dict({
+      'episode': 'special',
+      'sort_key': 'inf',
+      'url': 'url4',
+    }),
+  ])
+# ---

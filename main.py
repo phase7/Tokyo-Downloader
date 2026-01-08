@@ -212,9 +212,11 @@ def format_names(name_template, anime_name, type, epn, b_elements, total_eps, fi
 
 
 
-def main(url: str = typer.Option('https://www.tokyoinsider.com/anime/B/Bleach_(TV)', prompt=True)):
+def cli_main(url: str = typer.Option('https://www.tokyoinsider.com/anime/B/Bleach_(TV)', prompt=True)):
     okay(url)
 
+def main():
+    typer.run(cli_main)
 
 if __name__ == '__main__':
-    typer.run(main)
+    main()
