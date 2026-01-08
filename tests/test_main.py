@@ -1,7 +1,6 @@
 """Function-based tests for Tokyo Downloader using pytest and syrupy."""
-import pytest
+
 from datetime import datetime
-from pathlib import Path
 from main import convert_size, convert_date, sort_key, save_links_to_file
 
 
@@ -9,18 +8,21 @@ from main import convert_size, convert_date, sort_key, save_links_to_file
 # Import Tests
 # ============================================================================
 
+
 def test_imports():
     """Test that all main.py imports work."""
     import main
-    assert hasattr(main, 'convert_size')
-    assert hasattr(main, 'convert_date')
-    assert hasattr(main, 'sort_key')
-    assert hasattr(main, 'save_links_to_file')
+
+    assert hasattr(main, "convert_size")
+    assert hasattr(main, "convert_date")
+    assert hasattr(main, "sort_key")
+    assert hasattr(main, "save_links_to_file")
 
 
 # ============================================================================
 # Size Conversion Tests
 # ============================================================================
+
 
 def test_convert_size_mb():
     """Test MB size conversion."""
@@ -62,6 +64,7 @@ def test_convert_size_snapshot(snapshot):
 # Date Conversion Tests
 # ============================================================================
 
+
 def test_convert_date_valid():
     """Test valid date parsing."""
     result = convert_date("12/31/23")
@@ -92,7 +95,8 @@ def test_convert_date_snapshot(snapshot):
     ]
 
     results = {
-        date: convert_date(date).isoformat() if convert_date(date) != datetime.min
+        date: convert_date(date).isoformat()
+        if convert_date(date) != datetime.min
         else "datetime.min"
         for date in test_cases
     }
@@ -102,6 +106,7 @@ def test_convert_date_snapshot(snapshot):
 # ============================================================================
 # Sort Key Tests
 # ============================================================================
+
 
 def test_sort_key_numeric():
     """Test sort_key with numeric episode numbers."""
@@ -113,10 +118,10 @@ def test_sort_key_numeric():
 def test_sort_key_non_numeric():
     """Test sort_key with non-numeric values."""
     result = sort_key(["url", "special", None])
-    assert result == float('inf')
+    assert result == float("inf")
 
     result = sort_key(["url", "abc", None])
-    assert result == float('inf')
+    assert result == float("inf")
 
 
 def test_sort_key_snapshot(snapshot):
@@ -134,7 +139,7 @@ def test_sort_key_snapshot(snapshot):
     results = [
         {
             "input": item[1],
-            "output": sort_key(item) if sort_key(item) != float('inf') else "inf"
+            "output": sort_key(item) if sort_key(item) != float("inf") else "inf",
         }
         for item in test_cases
     ]
@@ -144,6 +149,7 @@ def test_sort_key_snapshot(snapshot):
 # ============================================================================
 # File Operations Tests
 # ============================================================================
+
 
 def test_save_links_plain_format(tmp_path):
     """Test saving links in plain format (no custom filenames)."""
@@ -222,6 +228,7 @@ def test_save_links_snapshot(tmp_path, snapshot):
 # Integration Tests with Snapshots
 # ============================================================================
 
+
 def test_sorting_workflow_snapshot(snapshot):
     """Test complete sorting workflow with different data types."""
     test_data = [
@@ -243,7 +250,7 @@ def test_sorting_workflow_snapshot(snapshot):
 
     # Handle infinity for snapshot
     for item in result:
-        if item["sort_key"] == float('inf'):
+        if item["sort_key"] == float("inf"):
             item["sort_key"] = "inf"
 
     assert result == snapshot
@@ -259,10 +266,7 @@ def test_size_comparison_snapshot(snapshot):
         "100 MB",
     ]
 
-    results = [
-        {"original": size, "converted_mb": convert_size(size)}
-        for size in sizes
-    ]
+    results = [{"original": size, "converted_mb": convert_size(size)} for size in sizes]
 
     # Sort by converted size
     results_sorted = sorted(results, key=lambda x: x["converted_mb"])
@@ -281,11 +285,7 @@ def test_date_comparison_snapshot(snapshot):
     ]
 
     results = [
-        {
-            "original": date,
-            "parsed": convert_date(date).isoformat()
-        }
-        for date in dates
+        {"original": date, "parsed": convert_date(date).isoformat()} for date in dates
     ]
 
     # Sort by parsed date
@@ -297,6 +297,7 @@ def test_date_comparison_snapshot(snapshot):
 # ============================================================================
 # Edge Cases
 # ============================================================================
+
 
 def test_convert_size_edge_cases_snapshot(snapshot):
     """Test edge cases for size conversion."""
@@ -329,7 +330,7 @@ def test_sort_key_edge_cases_snapshot(snapshot):
     results = [
         {
             "input": item[1],
-            "output": sort_key(item) if sort_key(item) != float('inf') else "inf"
+            "output": sort_key(item) if sort_key(item) != float("inf") else "inf",
         }
         for item in edge_cases
     ]
