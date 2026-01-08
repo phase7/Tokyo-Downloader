@@ -107,15 +107,14 @@ TOTAL       120     45    62%
 |---------|-------------|
 | `make lint` | Run linter (ruff) |
 | `make lint-fix` | Run linter with auto-fix |
-| `make format` | Format code with black |
+| `make format` | Format code with ruff |
 | `make format-check` | Check formatting without changes |
 | `make check` | Run all checks (tests + lint + format) |
 
 **Setup (optional):**
 ```bash
-# Add linting and formatting tools
+# Add linting and formatting tool
 make add-dev PACKAGE=ruff
-make add-dev PACKAGE=black
 ```
 
 **Examples:**

@@ -101,20 +101,20 @@ lint-fix: ## Run linter with auto-fix
 		echo "$(YELLOW)Note: ruff not installed. Install with: uv add --dev ruff$(NC)"; \
 	fi
 
-format: ## Format code with black
+format: ## Format code with ruff
 	@echo "$(BLUE)Formatting code...$(NC)"
-	@if uv run black main.py tests/ 2>/dev/null; then \
+	@if uv run ruff format . 2>/dev/null; then \
 		echo "$(GREEN)✓ Code formatted$(NC)"; \
 	else \
-		echo "$(YELLOW)Note: black not installed. Install with: uv add --dev black$(NC)"; \
+		echo "$(YELLOW)Note: ruff not installed. Install with: uv add --dev ruff$(NC)"; \
 	fi
 
 format-check: ## Check code formatting without changes
 	@echo "$(BLUE)Checking code formatting...$(NC)"
-	@if uv run black --check main.py tests/ 2>/dev/null; then \
+	@if uv run ruff format --check . 2>/dev/null; then \
 		echo "$(GREEN)✓ Code is properly formatted$(NC)"; \
 	else \
-		echo "$(YELLOW)Note: black not installed. Install with: uv add --dev black$(NC)"; \
+		echo "$(YELLOW)Note: ruff not installed. Install with: uv add --dev ruff$(NC)"; \
 	fi
 
 check: test lint format-check ## Run all checks (tests, linting, formatting)

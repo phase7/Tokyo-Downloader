@@ -66,14 +66,14 @@ jobs:
       - name: Install dependencies
         run: |
           uv sync
-          uv add --dev ruff black
+          uv add --dev ruff
 
-      - name: Run ruff
+      - name: Run ruff linting
         run: uv run ruff check .
         continue-on-error: true
 
-      - name: Check formatting with black
-        run: uv run black --check main.py tests/
+      - name: Check formatting with ruff
+        run: uv run ruff format --check .
         continue-on-error: true
 
   build:

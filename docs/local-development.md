@@ -212,15 +212,15 @@ uv run pytest --cov=main --cov-report=html
 
 ### Code Formatting (Optional)
 
-Add formatting tools if needed:
+Add ruff for linting and formatting:
 ```bash
-uv add --dev black ruff
+uv add --dev ruff
 ```
 
-Format code:
+Lint and format code:
 ```bash
-uv run black main.py
-uv run ruff check main.py
+uv run ruff check main.py      # Linting
+uv run ruff format main.py     # Formatting
 ```
 
 ## Understanding the Codebase
