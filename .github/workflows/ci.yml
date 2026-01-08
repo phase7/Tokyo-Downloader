@@ -9,27 +9,20 @@ on:
 jobs:
   test:
     name: Test on Python ${{ matrix.python-version }}
-    runs-on: ${{ matrix.os }}
+    runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest, macos-latest]
         python-version: ["3.14"]
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Install system dependencies (Ubuntu)
-        if: matrix.os == 'ubuntu-latest'
+      - name: Install system dependencies
         run: |
           sudo apt-get update
           sudo apt-get install -y libxml2-dev libxslt1-dev
-
-      - name: Install system dependencies (macOS)
-        if: matrix.os == 'macos-latest'
-        run: |
-          brew install libxml2 libxslt
 
       - name: Set up uv
         uses: astral-sh/setup-uv@v5
@@ -41,7 +34,10 @@ jobs:
         run: uv python install ${{ matrix.python-version }}
 
       - name: Install dependencies
-        run: uv sync --all-groups
+        run: uv sync --frozen --all-groups
+
+      - name: Prune cache
+        run: uv cache prune --ci
 
       - name: Run tests
         run: uv run pytest -v --tb=short
@@ -75,12 +71,16 @@ jobs:
         uses: astral-sh/setup-uv@v5
         with:
           enable-cache: true
+          cache-dependency-glob: "uv.lock"
 
       - name: Set up Python
         run: uv python install 3.14
 
       - name: Install dependencies
-        run: uv sync --all-groups
+        run: uv sync --frozen --all-groups
+
+      - name: Prune cache
+        run: uv cache prune --ci
 
       - name: Run ruff linting
         run: uv run ruff check .
@@ -108,12 +108,13 @@ jobs:
         uses: astral-sh/setup-uv@v5
         with:
           enable-cache: true
+          cache-dependency-glob: "uv.lock"
 
       - name: Set up Python
         run: uv python install 3.14
 
       - name: Install dependencies
-        run: uv sync
+        run: uv sync --frozen
 
       - name: Build package
         run: uv build
@@ -147,12 +148,13 @@ jobs:
         uses: astral-sh/setup-uv@v5
         with:
           enable-cache: true
+          cache-dependency-glob: "uv.lock"
 
       - name: Set up Python
         run: uv python install 3.14
 
       - name: Install dependencies
-        run: uv sync
+        run: uv sync --frozen
 
       - name: Test CLI command
         run: uv run tokyo-downloader --help
