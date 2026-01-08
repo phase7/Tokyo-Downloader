@@ -20,6 +20,17 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Install system dependencies (Ubuntu)
+        if: matrix.os == 'ubuntu-latest'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libxml2-dev libxslt1-dev
+
+      - name: Install system dependencies (macOS)
+        if: matrix.os == 'macos-latest'
+        run: |
+          brew install libxml2 libxslt
+
       - name: Set up uv
         uses: astral-sh/setup-uv@v5
         with:
@@ -55,6 +66,11 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Install system dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libxml2-dev libxslt1-dev
+
       - name: Set up uv
         uses: astral-sh/setup-uv@v5
         with:
@@ -64,9 +80,7 @@ jobs:
         run: uv python install 3.14
 
       - name: Install dependencies
-        run: |
-          uv sync
-          uv add --dev ruff
+        run: uv sync --all-groups
 
       - name: Run ruff linting
         run: uv run ruff check .
@@ -84,6 +98,11 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+
+      - name: Install system dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libxml2-dev libxslt1-dev
 
       - name: Set up uv
         uses: astral-sh/setup-uv@v5
@@ -118,6 +137,11 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+
+      - name: Install system dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libxml2-dev libxslt1-dev
 
       - name: Set up uv
         uses: astral-sh/setup-uv@v5
