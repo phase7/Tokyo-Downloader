@@ -87,35 +87,20 @@ coverage-xml: ## Generate XML coverage report (for CI)
 
 lint: ## Run linter (ruff)
 	@echo "$(BLUE)Running linter...$(NC)"
-	@if uv run ruff check . 2>/dev/null; then \
-		echo "$(GREEN)✓ No linting issues$(NC)"; \
-	else \
-		echo "$(YELLOW)Note: ruff not installed. Install with: uv add --dev ruff$(NC)"; \
-	fi
+	@uv run ruff check . && echo "$(GREEN)✓ No linting issues$(NC)" || true
 
 lint-fix: ## Run linter with auto-fix
 	@echo "$(BLUE)Running linter with auto-fix...$(NC)"
-	@if uv run ruff check --fix . 2>/dev/null; then \
-		echo "$(GREEN)✓ Linting issues fixed$(NC)"; \
-	else \
-		echo "$(YELLOW)Note: ruff not installed. Install with: uv add --dev ruff$(NC)"; \
-	fi
+	@uv run ruff check --fix .
 
 format: ## Format code with ruff
 	@echo "$(BLUE)Formatting code...$(NC)"
-	@if uv run ruff format . 2>/dev/null; then \
-		echo "$(GREEN)✓ Code formatted$(NC)"; \
-	else \
-		echo "$(YELLOW)Note: ruff not installed. Install with: uv add --dev ruff$(NC)"; \
-	fi
+	@uv run ruff format .
+	@echo "$(GREEN)✓ Code formatted$(NC)"
 
 format-check: ## Check code formatting without changes
 	@echo "$(BLUE)Checking code formatting...$(NC)"
-	@if uv run ruff format --check . 2>/dev/null; then \
-		echo "$(GREEN)✓ Code is properly formatted$(NC)"; \
-	else \
-		echo "$(YELLOW)Note: ruff not installed. Install with: uv add --dev ruff$(NC)"; \
-	fi
+	@uv run ruff format --check . && echo "$(GREEN)✓ Code is properly formatted$(NC)" || true
 
 check: test lint format-check ## Run all checks (tests, linting, formatting)
 	@echo "$(GREEN)✓ All checks passed$(NC)"
