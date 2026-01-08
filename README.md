@@ -1,6 +1,12 @@
 Since im rarely on github you can contact me on discord if anything needed. Username: x5oc
 
 # Tokyo Downloader
+
+[![CI](https://github.com/phase7/Tokyo-Downloader/actions/workflows/ci.yml/badge.svg)](https://github.com/phase7/Tokyo-Downloader/actions/workflows/ci.yml)
+[![Python 3.14](https://img.shields.io/badge/python-3.14-blue.svg)](https://www.python.org/downloads/release/python-3142/)
+[![uv](https://img.shields.io/badge/uv-package%20manager-orange.svg)](https://docs.astral.sh/uv/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
 ## 📌 Overview
 
 Tokyo Downloader is a Python-based tool that fetches download links for anime Episodes/OVAs/Movies/Specials from **Tokyo Insider**. The extracted links are saved in a text file for easy bulk downloading using any download manager such as **Internet Download Manager (IDM)**, **wget**, and **yt-dlp**.
